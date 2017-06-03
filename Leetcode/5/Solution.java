@@ -4,6 +4,69 @@ import java.util.ArrayList;
 
 public class Solution {
 
+	// Solution method 1
+	// Reverse string and find longest common substring
+	public static String longestPalindrome3(String s) {
+
+		String s_reverse = reverseString(s);
+		int[][] array = new int[s.length()][s_reverse.length()];
+		int row=0, col=0, max=0;
+		int start, complement;
+
+		for (int i=0;i<s.length(); i++){
+		
+			for (int j=0; j<s_reverse.length(); j++){
+			
+				if (s.charAt(i) == s_reverse.charAt(j)){
+				
+					if (i-1 >= 0 && j-1 >=0)
+						array[i][j] = array[i-1][j-1] + 1;
+					else
+						array[i][j] = 1;
+
+					if (array[i][j] > max){
+					
+						max = array[i][j];
+						row = i;
+						col = j;
+					}
+				}
+				else
+					array[i][j] = 0;
+			}
+		}
+		String lcs = "";
+
+		while (s.charAt(row) != s_reverse.charAt(s.length()-row-1+max-1)) {
+		
+			// If not along the diagonal, then erase
+			while (row >= 0 && col >= 0) {
+			
+				if (row != s.length()-col-1)
+					array[row][col] = 0;
+				else
+					array[row][col] = 1;
+				row--; col--;
+			}
+
+			max = 0;
+			// Search for new max
+			for (int i=0; i<s.length(); i++)
+				for (int j=0; j<s.length(); j++){
+				
+					if (array[i][j] > max){
+
+						max = array[i][j];
+						row = i;
+						col = j;
+					}
+				}
+		}
+		lcs = s.substring(row-max+1, row+1);
+
+		return lcs;
+	}
+
 	// Attempt #2
 	// HashMap to store indices
 	// Answer not accepted : Time Limit Exceeded (92/94 cases)
@@ -70,6 +133,16 @@ public class Solution {
 		return longest;
 	}
 
+	public static String reverseString(String s) {
+	
+		String s_reverse = "";
+		for (int i=s.length()-1; i>=0; i--){
+		
+			s_reverse += s.charAt(i);
+		}
+		return s_reverse;
+	}
+
 	// Checking palindrome 
 	// Run time : O(n/2) = O(n)
 	public static boolean isPalindrome(String s){
@@ -86,8 +159,12 @@ public class Solution {
 	
 		String s = "aaaaaaaaaaaaaaaaaa";
 		String s1 = "lphbehiapswjudnbcossedgioawodnwdruaaxhbkwrxyzaxygmnjgwysafuqbmtzwdkihbwkrjefrsgjbrycembzzlwhxneiijgzidhngbmxwkhphoctpilgooitqbpjxhwrekiqupmlcvawaiposqttsdgzcsjqrmlgyvkkipfigttahljdhtksrozehkzgshekeaxezrswvtinyouomqybqsrtegwwqhqivgnyehpzrhgzckpnnpvajqevbzeksvbezoqygjtdouecnhpjibmsgmcqcgxwzlzztdneahixxhwwuehfsiqghgeunpxgvavqbqrelnvhnnyqnjqfysfltclzeoaletjfzskzvcdwhlbmwbdkxnyqappjzwlowslwcbbmcxoiqkjaqqwvkybimebapkorhfdzntodhpbhgmsspgkbetmgkqlolsltpulgsmyapgjeswazvhxedqsypejwuzlvegtusjcsoenrcmypexkjxyduohlvkhwbrtzjnarusbouwamazzejhnetfqbidalfomecehfmzqkhndpkxinzkpxvhwargbwvaeqbzdhxzmmeeozxxtzpylohvdwoqocvutcelgdsnmubyeeeufdaoznxpvdiwnkjliqtgcmvhilndcdelpnilszzerdcuokyhcxjuedjielvngarsgxkemvhlzuprywlypxeezaxoqfges";
+		String s2 = "abcdasdfghjkldcba";
+		String s3 = "abazd";
+		String s4 = "abczdcba";
 
-		System.out.println(longestPalindrome2(s1));
 		System.out.println(longestPalindrome1(s1));
+		System.out.println(longestPalindrome2(s1));
+		System.out.println(longestPalindrome3(s2));
 	}
 }
