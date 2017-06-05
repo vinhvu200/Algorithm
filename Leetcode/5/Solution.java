@@ -4,14 +4,67 @@ import java.util.ArrayList;
 
 public class Solution {
 
+	// Dynamic Programming
+	// Run time O(n^2)
+	// Space Complexity O(n^2)
+	// Ex: If 'aba' is palindrome, then 'cabac' will be palindrome etc
+	// Accepted
+	public static String longestPalindrome4(String s) {
+	
+		if (s.isEmpty() || s == null)
+			return "";
+
+		boolean[][] table = new boolean[s.length()][s.length()];
+		int max_row=0, max_col=0;
+
+		for (int i=0; i<s.length(); i++) {
+			
+			table[i][i] = true;
+		
+			if (i+1 < s.length()){
+				
+				if (s.charAt(i) == s.charAt(i+1)){
+					table[i][i+1] = true;
+					max_row = i;
+					max_col = i+1;
+				}
+			}
+		}
+
+		for (int i=1; i<s.length(); i++) {
+		
+			int row=0;
+			int col=i;
+
+			while (col < s.length()) {
+			
+				if (s.charAt(row) == s.charAt(col)) {
+				
+					if (table[row+1][col-1] == true) {
+					
+						table[row][col] = true;
+						max_row = row;
+						max_col = col;
+					}
+				}
+				row++; col++;
+			}
+		}
+		return s.substring(max_row, max_col+1);
+	}
+
 	// Solution method 1
 	// Reverse string and find longest common substring
+	// All cases pass but "Time Limit Exceeded"
+	// *** Technically still O(n^2) but handling condition for 
+	// strings such as "abcdzfdcba" makes the time exceed limit
 	public static String longestPalindrome3(String s) {
 
 		String s_reverse = reverseString(s);
 		int[][] array = new int[s.length()][s_reverse.length()];
 		int row=0, col=0, max=0;
-		int start, complement;
+		int start, complement, size;
+		String s1, s2;
 
 		for (int i=0;i<s.length(); i++){
 		
@@ -160,11 +213,12 @@ public class Solution {
 		String s = "aaaaaaaaaaaaaaaaaa";
 		String s1 = "lphbehiapswjudnbcossedgioawodnwdruaaxhbkwrxyzaxygmnjgwysafuqbmtzwdkihbwkrjefrsgjbrycembzzlwhxneiijgzidhngbmxwkhphoctpilgooitqbpjxhwrekiqupmlcvawaiposqttsdgzcsjqrmlgyvkkipfigttahljdhtksrozehkzgshekeaxezrswvtinyouomqybqsrtegwwqhqivgnyehpzrhgzckpnnpvajqevbzeksvbezoqygjtdouecnhpjibmsgmcqcgxwzlzztdneahixxhwwuehfsiqghgeunpxgvavqbqrelnvhnnyqnjqfysfltclzeoaletjfzskzvcdwhlbmwbdkxnyqappjzwlowslwcbbmcxoiqkjaqqwvkybimebapkorhfdzntodhpbhgmsspgkbetmgkqlolsltpulgsmyapgjeswazvhxedqsypejwuzlvegtusjcsoenrcmypexkjxyduohlvkhwbrtzjnarusbouwamazzejhnetfqbidalfomecehfmzqkhndpkxinzkpxvhwargbwvaeqbzdhxzmmeeozxxtzpylohvdwoqocvutcelgdsnmubyeeeufdaoznxpvdiwnkjliqtgcmvhilndcdelpnilszzerdcuokyhcxjuedjielvngarsgxkemvhlzuprywlypxeezaxoqfges";
 		String s2 = "abcdasdfghjkldcba";
-		String s3 = "abazd";
+		String s3 = "cbbd";
 		String s4 = "abczdcba";
 
 		System.out.println(longestPalindrome1(s1));
 		System.out.println(longestPalindrome2(s1));
-		System.out.println(longestPalindrome3(s2));
+		System.out.println(longestPalindrome3(s1));
+		System.out.println(longestPalindrome4(s3));
 	}
 }
