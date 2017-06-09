@@ -2,35 +2,55 @@ public class Solution {
 
 	public static void nextPermutation2(int[] nums) {
 	
-		int pos = 0;
+		int pos=0;
+		int pos2=nums.length-1;
+		boolean flag=false;
 
 		for (int i=nums.length-1; i>=1; i--) {
 		
 			if (nums[i-1] < nums[i]){
-			
+
+				flag = true;
 				pos = i-1;
 				break;
 			}
 		}
 
+		if (flag == false) {
+		
+			int s = 0;
+			int e = nums.length-1;
+			while (s < e) {
+			
+				int t = nums[s];
+				nums[s] = nums[e];
+				nums[e] = t;
+				s++; e--;
+			}
+			return;
+		}
+
 		for (int i=pos+1; i<nums.length; i++) {
 		
-			if (nums[i] < nums[pos]) {
-				i--;
-				int swap = nums[i];
-				nums[i] = nums[pos];
-				nums[pos] = swap;
+			if (nums[pos] > nums[i]) {
+
+				pos2 = i - 1;
 				break;
 			}
 		}
 
-		int end = nums.length-1;
+		int swap = nums[pos];
+		nums[pos] = nums[pos2];
+		nums[pos2] = swap;
+
 		int start = pos+1;
+		int end = nums.length-1;
+
 		while (start < end) {
 		
-			int swap = nums[start];
+			int temp = nums[start];
 			nums[start] = nums[end];
-			nums[end] = swap;
+			nums[end] = temp;
 			start++; end--;
 		}
 	}
@@ -100,7 +120,7 @@ public class Solution {
 
 	public static void main(String[] args) {
 	
-		int nums[] = {1,5,8,4,7,6,5,3,1};
+		int nums[] = {3,2,1};
 		nextPermutation2(nums);
 		
 		for (int i=0; i<nums.length; i++)
