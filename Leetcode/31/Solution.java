@@ -32,7 +32,7 @@ public class Solution {
 
 		for (int i=pos+1; i<nums.length; i++) {
 		
-			if (nums[pos] > nums[i]) {
+			if (nums[pos] >= nums[i]) {
 
 				pos2 = i - 1;
 				break;
@@ -93,7 +93,7 @@ public class Solution {
 			
 				for (int j=i+1; j<nums.length; j++) {
 				
-					if (nums[i] > nums[j]) {
+					if (nums[i] >= nums[j]) {
 					
 						int swap = nums[i];
 						nums[i] = nums[j];
@@ -120,7 +120,7 @@ public class Solution {
 
 	public static void main(String[] args) {
 	
-		int nums[] = {3,2,1};
+		int nums[] = {1,5,1};
 		nextPermutation2(nums);
 		
 		for (int i=0; i<nums.length; i++)
