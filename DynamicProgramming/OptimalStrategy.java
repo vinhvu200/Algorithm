@@ -1,29 +1,24 @@
+// http://www.geeksforgeeks.org/dynamic-programming-set-31-optimal-strategy-for-a-game/
+
 public class OptimalStrategy {
 
+	// Dynamic Programming
+	// Run time : O(n^2)
+	// Space : O(n^2)
 	public int dp_os(int[] arr) {
-	
+
 		int[][] dp = new int[arr.length][arr.length];
-		int gap,i,j,x,y,z;
-
-		for (gap=0; gap<arr.length; gap++) {
 		
-			for(i=0, j=gap; j<arr.length; i++, j++){
-			
-				x = ((i+2) <= j) ? dp[i+2][j] : 0;
-	            y = ((i+1) <= (j-1)) ? dp[i+1][j-1] : 0;
-	            z = (i <= (j-2))? dp[i][j-2]: 0;
-
-				dp[i][j] = Math.max(arr[i] + Math.min(x, y), arr[j] + Math.min(y, z));
-			}
-		}
-
-		for (i=0; i<arr.length; i++) {
+		for (int gap=0; gap<arr.length; gap++) {
 		
-			for (j=0; j<arr.length; j++) {
+			for (int i=0,j=gap; j<arr.length; i++, j++) {
 			
-				System.out.print(dp[i][j] + " ");
+				int x = (i+2 <= j) ? dp[i+2][j] : 0;
+				int y = (i+1 <= j-1) ? dp[i+1][j-1] : 0;
+				int z = (i <= j-2) ? dp[i][j-2] : 0;
+
+				dp[i][j] = Math.max(arr[i] + Math.min(x,y), arr[j] + Math.min(y,z));
 			}
-			System.out.println();
 		}
 
 		return dp[0][arr.length-1];
@@ -64,18 +59,15 @@ public class OptimalStrategy {
 		for (int i=0; i<arr1.length;i++)
 			System.out.print(arr1[i] + " ");
 		System.out.println();
-
 		System.out.println("Maximum point(recursive) : " + obj.os(arr1));
+		System.out.println("Maximum point(dynamic programming) : " + obj.dp_os(arr1));
 
-		obj.dp_os(arr1);
-
-		/*
-		System.out.print("Array2 : ");
-		for (int i=0; i<arr2.length;i++)
+		System.out.print("\nArray2 : ");
+		for (int i=0; i<arr2.length; i++)
 			System.out.print(arr2[i] + " ");
 		System.out.println();
-
 		System.out.println("Maximum point(recursive) : " + obj.os(arr2));
-		*/
+		System.out.println("Maximum point(dynamic programming) : " + obj.dp_os(arr2));
+
 	}
 }
