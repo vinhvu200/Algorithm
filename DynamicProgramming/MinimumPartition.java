@@ -27,7 +27,7 @@ public class MinimumPartition {
 					dp[i][j] = dp[i][j] || dp[i-1][j-arr[i-1]];
 			}
 		}
-
+		
 		int min = sum;
 		for (int i=sum/2; i>=0; i--) {
 		
