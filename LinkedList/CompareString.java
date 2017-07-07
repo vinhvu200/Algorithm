@@ -1,3 +1,5 @@
+// http://www.geeksforgeeks.org/compare-two-strings-represented-as-linked-lists/
+
 public class CompareString {
 
 	public boolean compare(ListNodeString head1, ListNodeString head2) {

@@ -3,9 +3,16 @@ public class ListNode {
 	int val;
 	ListNode next;
 	ListNode(int x) {val=x;}
+	ListNode() {val=-1;}
 
 	public void add(int num) {
 	
+		if (this.val == -1){
+
+			this.val=num;
+			return;
+		}
+
 		ListNode n = new ListNode(num);
 		ListNode temp = this;
 		while (temp.next != null)
