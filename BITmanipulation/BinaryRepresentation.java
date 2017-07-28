@@ -2,24 +2,14 @@ public class BinaryRepresentation {
 
 	public void binary(int num) {
 	
-		int exp = 0;
+		for (int i = 31; i >= 0; i--) {
 		
-		while (Math.pow(2,exp) < num)
-			exp++;
-
-		exp--;
-
-		while (exp >= 0) {
-		
-			if (Math.pow(2,exp) <= num){
-				
+			if ( (num & (1 << i)) == 1 << i )
 				System.out.print("1" + " ");
-				num -= Math.pow(2,exp);
-			}
 			else
 				System.out.print("0" + " ");
-			exp--;
 		}
+
 		System.out.println();
 	}
 
