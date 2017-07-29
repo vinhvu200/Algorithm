@@ -3,8 +3,45 @@ import java.util.Iterator;
 
 public class DFS {
 
-	private void dfs2_util(Graph graph, int s, boolean[] visited) {
+	public void dfs(Graph graph, int s) {
+	
+		Stack<Integer> stack = new Stack<>();
+		boolean[] visited = new boolean[graph.V];
 
+		visited[s] = true;
+		System.out.print(s + " ");
+
+		stack.push(s);
+
+		while (!stack.empty()) {
+		
+			boolean allVisited = true;
+
+			int current = stack.peek();
+
+			Iterator<Integer> i = graph.adj[current].listIterator();
+
+			while (i.hasNext()) {
+			
+				int n = i.next();
+
+				if (!visited[n]) {
+				
+					visited[n] = true;
+					System.out.print(n + " ");
+					stack.push(n);
+					allVisited = false;
+					break;
+				}
+			}
+
+			if (allVisited)
+				stack.pop();
+		}
+	}
+
+	private void dfs2_util(Graph graph, int s, boolean[] visited) {
+	
 		visited[s] = true;
 		System.out.print(s + " ");
 
@@ -20,43 +57,10 @@ public class DFS {
 	}
 
 	public void dfs2(Graph graph, int s) {
-
+	
 		boolean[] visited = new boolean[graph.V];
-		
+
 		dfs2_util(graph, s, visited);
-	}
-
-	public void dfs(Graph graph, int s) {
-
-		Stack<Integer> stack = new Stack<>();
-		boolean[] visited = new boolean[graph.V];
-
-		visited[s] = true;
-		stack.push(s);
-		System.out.print(s + " ");
-
-		while (!stack.empty()) {
-		
-			boolean visitFlag = false;
-			int current = stack.peek();
-
-			Iterator<Integer> i = graph.adj[current].listIterator();
-			while (i.hasNext()) {
-			
-				int n = i.next();
-				if (!visited[n]) {
-				
-					visited[n] = true;
-					System.out.print(n + " ");
-					stack.push(n);
-					visitFlag = true;
-					break;
-				}
-			}
-
-			if (visitFlag == false)
-				stack.pop();
-		}
 	}
 
 	public static void main(String[] args) {

@@ -4,23 +4,25 @@ import java.util.Queue;
 
 public class BFS {
 
+
 	public void bfs(Graph graph, int start) {
 	
-		boolean[] visited = new boolean[graph.V];
 		LinkedList<Integer> queue = new LinkedList<>();
+		boolean[] visited = new boolean[graph.V];
 
-		queue.add(start);
 		visited[start] = true;
 
+		queue.add(start);
+
 		while (queue.size() != 0) {
-		
+
 			int current = queue.poll();
 			System.out.print(current + " ");
 
 			Iterator<Integer> i = graph.adj[current].listIterator();
 
 			while (i.hasNext()) {
-			
+		
 				int n = i.next();
 				if (!visited[n]) {
 				
@@ -29,6 +31,7 @@ public class BFS {
 				}
 			}
 		}
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
@@ -44,6 +47,5 @@ public class BFS {
 		graph.addEdge(3,3);
 		
 		obj.bfs(graph, 2);
-		System.out.println();
 	}
 }
