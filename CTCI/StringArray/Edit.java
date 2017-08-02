@@ -2,6 +2,59 @@ import java.util.HashMap;
 
 public class Edit {
 
+	private boolean editInsert(String s1, String s2) {
+	
+		boolean foundFlag = false;
+		int i = 0;
+		int j = 0;
+
+		while (i < s1.length() && j < s2.length()) {
+		
+			if (s1.charAt(i) != s2.charAt(j)) {
+			
+				if (foundFlag)
+					return false;
+				foundFlag = true;
+				i++;
+			}
+			else {
+			
+				i++;
+				j++;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean editReplace(String s1, String s2) {
+
+		boolean foundFlag = false;
+		for (int i=0; i<s1.length(); i++) {
+		
+			if (s1.charAt(i) != s2.charAt(i)) {
+			
+				if (foundFlag)
+					return false;
+			
+				foundFlag = true;
+			}
+		}
+		return true;
+	}
+
+	public boolean edit2(String s1, String s2) {
+	
+		if (s1.length() == s2.length())
+			return editReplace(s1, s2);
+		else if (s1.length() - 1 == s2.length())
+			return editInsert(s1, s2);
+		else if (s1.length() + 1 == s2.length())
+			return editInsert(s2, s1);
+
+		return false;
+	}
+
 	public boolean edit(String s1, String s2) {
 	
 		// HashMap
@@ -64,5 +117,11 @@ public class Edit {
 		System.out.println(s3 + " : " + s4 + " -- " + obj.edit(s3,s4));
 		System.out.println(s5 + " : " + s6 + " -- " + obj.edit(s5,s6));
 		System.out.println(s7 + " : " + s8 + " -- " + obj.edit(s7,s8));
+
+		System.out.println(s1 + " : " + s2 + " -- " + obj.edit2(s1,s2));
+		System.out.println(s3 + " : " + s4 + " -- " + obj.edit2(s3,s4));
+		System.out.println(s5 + " : " + s6 + " -- " + obj.edit2(s5,s6));
+		System.out.println(s7 + " : " + s8 + " -- " + obj.edit2(s7,s8));
+
 	}
 }
