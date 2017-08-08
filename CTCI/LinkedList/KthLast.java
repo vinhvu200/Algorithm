@@ -1,5 +1,20 @@
 public class KthLast {
 
+	public int kth2(Node head, int k) {
+	
+		if (head == null)
+			return 0;
+
+		int index = kth2(head.next, k) + 1;
+
+		if (index == k) {
+
+			System.out.println("k : " + k + " -- " + head.data);
+		}
+
+		return index;
+	}
+
 	public int kth(Node head, int k) {
 	
 		// Two pointers to head
@@ -42,5 +57,7 @@ public class KthLast {
 		System.out.println(obj.kth(head, 3));
 		System.out.println(obj.kth(head, 5));
 		System.out.println(obj.kth(head, 7));
+
+		obj.kth2(head, 5);
 	}
 }
